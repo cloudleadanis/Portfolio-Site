@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Anis Ali Khan — Software Developer</title>
+  <meta name="description" content="Anis Ali Khan — Swift developer, cloud architect (AWS/Azure), fintech experience. Livestreams Swift app-building." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Highlight.js styles (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" id="hljs-theme" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">Anis Ali Khan</a>
+      <nav class="main-nav">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#live">Live</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1>Hi, I’m Anis Ali Khan</h1>
+          <p class="hero-lead">Software developer and cloud architect — building elegant apps with Swift and resilient systems on AWS.</p>
+          <p class="bio">Anis Ali Khan is a software developer with 12 years of cloud experience on AWS and Azure. He builds systems for fintech and financial firms. He is active in his local AWS user group and livestreams Swift tutorials.</p>
+
+          <p class="cta">
+            <a class="btn" href="mailto:cloudleadanis@gmail.com">Get in touch</a>
+            <a class="btn ghost" href="https://github.com/cloudleadanis" target="_blank" rel="noopener">View GitHub</a>
+          </p>
+
+          <div class="social">
+            <a href="https://github.com/cloudleadanis" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://linkedin.com/in/khananis" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://x.com/TheCloudLead" target="_blank" rel="noopener">X</a>
+            <a href="https://www.twitch.tv/cloudleadanis" target="_blank" rel="noopener">Twitch</a>
+          </div>
+        </div>
+
+        <div class="hero-photo">
+          <img src="https://i.imgur.com/DQTWnGH.jpg" alt="Anis Ali Khan" />
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section about">
+      <div class="container">
+        <h2>About</h2>
+        <p>With a dozen years in software development, I focus on building reliable, maintainable systems. I combine hands-on Swift app development with cloud architecture (AWS, Azure) to deliver production-ready software for fintech and financial services.</p>
+      </div>
+    </section>
+
+    <section id="skills" class="section skills">
+      <div class="container">
+        <h2>Skills</h2>
+        <ul class="skills-list">
+          <li><strong>Swift</strong> — SwiftUI, UIKit, Concurrency (async/await), Swift Package Manager</li>
+          <li><strong>App Platforms</strong> — iOS, macOS (HIG-compliant interfaces)</li>
+          <li><strong>Cloud</strong> — AWS (primary), Azure; system design for resilient services</li>
+          <li><strong>Architecture</strong> — Clean Architecture, DDD, design patterns, testable code</li>
+          <li><strong>DevOps</strong> — CI/CD, automated testing, infrastructure as code</li>
+        </ul>
+
+        <h3>Swift example</h3>
+        <pre><code class="language-swift">import Foundation
+
+// Simple Swift async example (network fetch)
+struct ExampleService {
+  func fetchData(from url: URL) async throws -> Data {
+    let (data, response) = try await URLSession.shared.data(from: url)
+    guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
+      throw URLError(.badServerResponse)
+    }
+    return data
+  }
+}
+
+// Usage
+let service = ExampleService()
+Task {
+  do {
+    let url = URL(string: "https://api.example.com/data.json")!
+    let data = try await service.fetchData(from: url)
+    print("Fetched \(data.count) bytes")
+  } catch {
+    print("Error: \(error)")
+  }
+}
+</code></pre>
+      </div>
+    </section>
+
+    <section id="projects" class="section projects">
+      <div class="container">
+        <h2>Projects</h2>
+        <div class="project-grid">
+
+          <article class="project">
+            <h3>Lanes</h3>
+            <p>HIG-compliant Kanban board for macOS focused on fast keyboard-driven workflows and a native Apple-platform experience.</p>
+            <p class="muted">Technologies: Swift, SwiftUI, AppKit integrations, macOS HIG</p>
+            <p><a href="https://github.com/cloudleadanis" target="_blank" rel="noopener">View on GitHub</a></p>
+          </article>
+
+          <article class="project">
+            <h3>Fart Simulator Pro</h3>
+            <p>A lightweight iOS gag app with playful UI and sound design.</p>
+            <p class="muted">Technologies: Swift, UIKit, AVFoundation</p>
+            <p><a href="https://github.com/cloudleadanis" target="_blank" rel="noopener">View on GitHub</a></p>
+          </article>
+
+          <article class="project">
+            <h3>Tonikaku Community</h3>
+            <p>A growing community of builders focused on Apple platform development. Powered by CloudKit and AWS for syncing and backend services.</p>
+            <p class="muted">Technologies: Swift, CloudKit, AWS, Serverless</p>
+            <p><a href="https://github.com/cloudleadanis" target="_blank" rel="noopener">View on GitHub</a></p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="live" class="section live">
+      <div class="container">
+        <h2>Live / Streams</h2>
+        <p>I livestream Swift app development and tutorials. Catch recent streams and join live on Twitch.</p>
+
+        <div class="twitch-embed">
+          <!-- Twitch embed -->
+          <iframe src="https://player.twitch.tv/?channel=cloudleadanis&parent=github.io" 
+            height="480" width="100%" allowfullscreen="true" frameborder="0" scrolling="no"></iframe>
+          <p class="muted">Live on <a href="https://www.twitch.tv/cloudleadanis" target="_blank" rel="noopener">Twitch</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2>Contact</h2>
+        <p>If you’d like to work together, hire me, or invite me to speak, email me or reach out on social media.</p>
+        <p><a class="btn" href="mailto:cloudleadanis@gmail.com">Email: cloudleadanis@gmail.com</a></p>
+        <div class="muted">Or find me on <a href="https://github.com/cloudleadanis" target="_blank" rel="noopener">GitHub</a>, <a href="https://linkedin.com/in/khananis" target="_blank" rel="noopener">LinkedIn</a>, or <a href="https://x.com/TheCloudLead" target="_blank" rel="noopener">X</a>.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2026 Anis Ali Khan — Built with Swift, AWS, and a little coffee.</small>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
