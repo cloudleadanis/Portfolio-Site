@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows Desktop Development — From Zero to Top 1%</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0D0D0D;
+    --dark:  #222222;
+    --mid:   #666666;
+    --light: #AAAAAA;
+    --rule:  #E2E2E2;
+    --bg:    #FFFFFF;
+    --bg2:   #F7F7F7;
+    --check-idle: #D8D8D8;
+    --check-done: #0D0D0D;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 100px;
+  }
+
+  /* ── Masthead ── */
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--black);
+    margin-bottom: 14px;
+  }
+
+  .deck {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mid);
+    margin-bottom: 48px;
+    line-height: 1.5;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 44px 0;
+  }
+
+  /* ── Intro ── */
+  .intro {
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.75;
+    margin-bottom: 0;
+  }
+
+  /* ── Phase block ── */
+  .phase { margin-top: 0; }
+
+  .phase-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 4px;
+  }
+
+  .phase-num {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .phase h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.01em;
+  }
+
+  .phase-sub {
+    font-size: 13px;
+    color: var(--mid);
+    font-weight: 300;
+    margin-bottom: 24px;
+    padding-left: 0;
+    font-style: italic;
+  }
+
+  /* ── Checklist items ── */
+  .checklist { list-style: none; }
+
+  .checklist li {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 14px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    align-items: start;
+  }
+
+  .checklist li:first-child { border-top: 1px solid var(--rule); }
+
+  /* Checkbox */
+  .check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--check-idle);
+    border-radius: 3px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .check svg {
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .checklist li.done .check {
+    background: var(--check-done);
+    border-color: var(--check-done);
+  }
+
+  .checklist li.done .check svg { opacity: 1; }
+
+  .checklist li.done .item-title {
+    color: var(--light);
+    text-decoration: line-through;
+    text-decoration-color: var(--rule);
+  }
+
+  .checklist li.done .item-url,
+  .checklist li.done .item-desc { color: var(--rule); }
+
+  /* Item content */
+  .item-body { min-width: 0; }
+
+  .item-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--black);
+    margin-bottom: 3px;
+    transition: color 0.15s;
+    line-height: 1.4;
+  }
+
+  .item-url {
+    font-size: 11px;
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    color: var(--light);
+    margin-bottom: 6px;
+    display: block;
+    text-decoration: none;
+    transition: color 0.15s;
+    word-break: break-all;
+  }
+
+  .item-url:hover { color: var(--mid); text-decoration: underline; }
+
+  .item-desc {
+    font-size: 13px;
+    color: var(--mid);
+    font-weight: 300;
+    line-height: 1.6;
+    transition: color 0.15s;
+  }
+
+  /* ── Stack table ── */
+  .table-section { margin-top: 0; }
+
+  .table-section h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr { border-bottom: 2px solid var(--black); }
+
+  thead th {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding: 0 16px 10px 0;
+    text-align: left;
+  }
+
+  tbody td {
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--dark);
+  }
+
+  tbody td:first-child {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--light);
+    white-space: nowrap;
+    width: 80px;
+  }
+
+  tbody td:nth-child(2) { font-weight: 500; }
+  tbody td:nth-child(3) { color: var(--mid); font-weight: 300; }
+
+  /* ── Progress bar ── */
+  .progress-wrap {
+    margin-bottom: 48px;
+  }
+
+  .progress-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .progress-track {
+    height: 2px;
+    background: var(--rule);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--black);
+    border-radius: 1px;
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  /* ── Closing ── */
+  .closing {
+    padding: 28px 32px;
+    border: 1px solid var(--rule);
+    background: var(--bg2);
+  }
+
+  .closing-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 8px;
+  }
+
+  .closing p {
+    font-size: 14px;
+    color: var(--dark);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 64px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rule);
+    text-align: center;
+  }
+
+  @media (max-width: 560px) {
+    body { padding: 48px 24px 72px; }
+    h1 { font-size: 32px; }
+  }
+
+  @media print {
+    .check { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="eyebrow">Microsoft Learn &nbsp;·&nbsp; Official Resources Only</div>
+<h1>From Zero to<br>Top 1%</h1>
+<p class="deck">Windows desktop development, sequenced.<br>No third-party courses. No paywalls.</p>
+
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span>Progress</span>
+    <span id="progress-text">0 of 7 complete</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<p class="intro">Every resource is free, official, and on Microsoft Learn. Follow the phases in order. The path ends where the top 1% live: DirectX and the Win32 Application Programming Interface (API), called directly, without a framework in the way.</p>
+
+<hr>
+
+<!-- Phase 1 -->
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-num">Phase 1</span>
+    <h2>Platform Foundation</h2>
+  </div>
+  <p class="phase-sub">Understand the two SDKs before writing a line of code.</p>
+
+  <ul class="checklist">
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">Windows Developer Platform Overview</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/apps/get-started/" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/apps/get-started/</a>
+        <div class="item-desc">The authoritative overview. Explains the relationship between the Windows SDK (OS-level APIs) and the Windows App SDK (modern, decoupled APIs including WinUI 3). Read this first.</div>
+      </div>
+    </li>
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">Set Up Your Environment</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/apps/get-started/start-here" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/apps/get-started/start-here</a>
+        <div class="item-desc">Installs Visual Studio 2026 with the required WinUI and Windows App SDK workloads via a single WinGet configuration file. Run this before anything else.</div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Phase 2 -->
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-num">Phase 2</span>
+    <h2>WinUI 3</h2>
+  </div>
+  <p class="phase-sub">Microsoft's current native UI framework. Fluent Design, XAML, C#.</p>
+
+  <ul class="checklist">
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">WinUI 3 Overview</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/apps/winui/winui3/" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/apps/winui/winui3/</a>
+        <div class="item-desc">The canonical reference. Covers the programming model, Fluent Design integration, and the relationship to the Windows App SDK. Bookmark it.</div>
+      </div>
+    </li>
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">WinUI Notes Tutorial</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/apps/tutorials/winui-notes/intro" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/apps/tutorials/winui-notes/intro</a>
+        <div class="item-desc">Builds a real note-taking app. Covers XAML markup, C# code-behind, file I/O, data binding, and page navigation. The best hands-on starting point.</div>
+      </div>
+    </li>
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">WinUI 3 Gallery</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/apps/dev-tools/samples" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/apps/dev-tools/samples</a>
+        <div class="item-desc">Install this app from the Microsoft Store. Every control, every style, every design pattern, with live XAML source. Keep it open while building.</div>
+      </div>
+    </li>
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">Windows App SDK Samples</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/apps/dev-tools/samples" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/apps/dev-tools/samples</a>
+        <div class="item-desc">Production-grade code covering app lifecycle, windowing, push notifications, and WinUI 3 integration. Study these after the tutorial.</div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Phase 3 -->
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-num">Phase 3</span>
+    <h2>Win32 API</h2>
+  </div>
+  <p class="phase-sub">The foundation everything runs on. Read it to understand it.</p>
+
+  <ul class="checklist">
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">Win32 API Reference</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/win32/" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/win32/</a>
+        <div class="item-desc">Do not read this cover to cover. Focus on three areas: window management, the message loop, and input handling. Every framework above this calls into these APIs. Knowing them separates intermediate from advanced developers.</div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Phase 4 -->
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-num">Phase 4</span>
+    <h2>DirectX</h2>
+  </div>
+  <p class="phase-sub">Top 1% territory. Browsers and game engines live here.</p>
+
+  <ul class="checklist">
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">Getting Started with DirectX Graphics</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/win32/getting-started-with-directx-graphics" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/win32/getting-started-with-directx-graphics</a>
+        <div class="item-desc">For 2D graphics and text: Direct2D and DirectWrite. For 3D: Direct3D 11. For compositing: DirectComposition. Understand which API does what before writing code.</div>
+      </div>
+    </li>
+    <li onclick="toggle(this)">
+      <div class="check"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1,3.5 3.5,6 8,1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body">
+        <div class="item-title">Roadmap for Desktop DirectX Apps</div>
+        <a class="item-url" href="https://learn.microsoft.com/en-us/windows/win32/direct3dgetstarted/roadmap-for-metro-style-apps-using-directx" target="_blank" onclick="event.stopPropagation()">learn.microsoft.com/en-us/windows/win32/direct3dgetstarted/roadmap-for-metro-style-apps-using-directx</a>
+        <div class="item-desc">Microsoft's own sequenced learning path for DirectX and C++. Covers environment setup, the Win32 integration layer, and sample applications. Use C++/WinRT for new projects.</div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Stack table -->
+<div class="table-section">
+  <h2>The Stack at a Glance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th>Windows</th>
+        <th>Apple Equivalent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1 + 2</td><td>WinUI 3</td><td>SwiftUI</td></tr>
+      <tr><td>3</td><td>WPF</td><td>AppKit</td></tr>
+      <tr><td>3</td><td>Win32</td><td>Core Graphics / POSIX</td></tr>
+      <tr><td>4</td><td>DirectX</td><td>Metal</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+
+<div class="closing">
+  <div class="closing-label">The short version</div>
+  <p>WinUI 3 Gallery. Notes Tutorial. App SDK Samples. Win32 API reference. DirectX roadmap. In that order. Nothing else required.</p>
+</div>
+
+<div class="footer">All resources official Microsoft Learn &nbsp;·&nbsp; learn.microsoft.com</div>
+
+<script>
+  const TOTAL = 7;
+
+  function toggle(li) {
+    li.classList.toggle('done');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = document.querySelectorAll('.checklist li.done').length;
+    const pct = Math.round((done / TOTAL) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = done + ' of ' + TOTAL + ' complete';
+  }
+
+  updateProgress();
+</script>
+
+</body>
+</html>
