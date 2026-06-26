@@ -1,0 +1,12 @@
+# Day 1 of Building in Public
+*June 25, 2026*
+
+I wrote twenty tests today. They all failed. I'm calling it a win.
+
+This is how test-driven development works — you write the tests before the code exists, so of course they fail. The failure is the spec. The implementation comes after. It's a discipline I'm applying to the most load-bearing piece of infrastructure in the Tonykaku Systems suite, a shared data layer that every app I build will depend on. You want that foundation to be honest before you pour concrete.
+
+On the Lanes icon: Figma is installed, Icon Composer is installed, and I've been going back and forth between them trying to get the shape right. The coloring isn't there yet. This is the part of app development nobody warns you about — you can have a clear vision in your head and still spend three sessions arguing with a vector.
+
+Twenty failing tests and an icon that's getting closer. Good enough for today.
+
+— Anis
