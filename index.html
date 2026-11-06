@@ -1,24 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/scripts.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khan Sarai Academy | Early Access</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #000000;
+      --border: #000000;
+      --input-bg: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --text: #ffffff;
+        --border: #ffffff;
+        --input-bg: #000000;
+      }
+    }
+
+    /* Manual Dark Mode Override via CSS Checkbox Hack (JS-Free) */
+    #theme-toggle:checked ~ .container {
+      --bg: #000000;
+      --text: #ffffff;
+      --border: #ffffff;
+      --input-bg: #000000;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: "Georgia", "Times New Roman", serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: normal;
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    p.tagline {
+      font-size: 1.25rem;
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* CSS-Only Dark Mode Toggle Switch */
+    .toggle-wrapper {
+      font-size: 0.875rem;
+      user-select: none;
+    }
+
+    #theme-toggle {
+      display: none;
+    }
+
+    .toggle-label {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.6rem;
+      display: inline-block;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    label {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      background-color: var(--input-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      font-family: inherit;
+      font-size: 1rem;
+      border-radius: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid var(--text);
+      outline-offset: -2px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 220px;
+    }
+
+    button[type="submit"] {
+      background-color: var(--text);
+      color: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.85rem 1.5rem;
+      font-family: inherit;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+      border-radius: 0;
+      width: 100%;
+    }
+
+    button[type="submit"]:hover {
+      opacity: 0.85;
+    }
+
+    footer {
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <!-- Hidden checkbox for CSS-only dark mode toggle -->
+  <input type="checkbox" id="theme-toggle">
+
+  <div class="container">
     <header>
-        <h1>Welcome to My Portfolio</h1>
+      <div>
+        <h1>Khan Sarai Academy</h1>
+        <p class="tagline">Let's Learn.</p>
+      </div>
+      <div class="toggle-wrapper">
+        <label for="theme-toggle" class="toggle-label">Toggle Mode</label>
+      </div>
     </header>
+
     <main>
-        <section>
-            <img src="images/profile.jpg" alt="Profile Picture">
-            <p>This is my portfolio where I showcase my work.</p>
-        </section>
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="First and last name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="interest">Area of Interest</label>
+          <select id="interest" name="area_of_interest" required>
+            <option value="" disabled selected>Select an area of focus</option>
+            <option value="Systems Programming & C">Systems Programming & C</option>
+            <option value="Apple Platforms & Swift">Apple Platforms & Swift</option>
+            <option value="Software Architecture & Cloud">Software Architecture & Cloud</option>
+            <option value="Other / General Studies">Other / General Studies</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="experience">Experience Level</label>
+          <select id="experience" name="experience_level" required>
+            <option value="" disabled selected>Select your current experience level</option>
+            <option value="Beginner">Beginner (Starting fresh)</option>
+            <option value="Intermediate">Intermediate (Familiar with fundamentals)</option>
+            <option value="Advanced">Advanced (Professional engineer / architect)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="letter">Why I want to join Khan Sarai Academy</label>
+          <textarea id="letter" name="letter_of_intent" required placeholder="Write your letter of intent here..."></textarea>
+        </div>
+
+        <button type="submit">Submit Application for Early Access</button>
+      </form>
     </main>
+
     <footer>
-        <p>&copy; 2026 cloudleadanis. All rights reserved.</p>
+      <p>&copy; Khan Sarai Academy. All rights reserved.</p>
     </footer>
+  </div>
 </body>
 </html>
